@@ -26,7 +26,7 @@ class UserFormRequest extends FormRequest
             'telephone' => ['required','min:5','regex:/^[0-9]+$/'],
             'email' => ['required','email'],
             'password' =>['required','min:5'],
-            'image' => ['image','max:2000']
+            'image' => []
         ];
     }
 }

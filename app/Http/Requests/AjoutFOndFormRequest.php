@@ -22,7 +22,7 @@ class AjoutFOndFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fond' =>['required','regex:/^[0-9]+$/']
+            'fond' =>['required','regex:/^[0-9]+\.?[0-9]+$/']
         ];
     }
 }

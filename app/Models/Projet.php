@@ -11,17 +11,20 @@ class Projet extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'id',
         'nom',
         'createur_id',
+        'administrateur_id',
+        'projet_parent_id',
         'description',
         'budget',
         'date_fin',
         'image'
     ];
 
-    public function createur(): BelongsTo
+    public function administrateur(): BelongsTo
     {
-        return $this->belongsTo(User::class,'createur_id');
+        return $this->belongsTo(User::class,'administrateur_id');
     }
 
     public function imageUrl():string 

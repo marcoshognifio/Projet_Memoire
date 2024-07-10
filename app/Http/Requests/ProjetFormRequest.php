@@ -26,7 +26,10 @@ class ProjetFormRequest extends FormRequest
             'description' => ['min:10',],
             'budget' =>['regex:/^[0-9]+$/'],
             'date_fin'=>['date'],
-            'image' => ['image','max:2000']
+            'image' => ['image','max:2000'],
+            'createur_id' => ['regex:/^[0-9]+$/'],
+            'administrateur_id' => ['regex:/^[0-9]+$/'],
+            'projet_parent_id' => ['regex:/^[0-9]+$/']
         ];
     }
 }

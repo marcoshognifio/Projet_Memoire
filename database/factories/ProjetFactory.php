@@ -20,17 +20,18 @@ class ProjetFactory extends Factory
         
         return [
             'nom' => fake()->sentence(),
-            'createur_id' =>fake()->randomElement([3,2]),
-            'administrateur_id' =>fake()->randomElement([3,2]),
+            'createur_id' =>fake()->randomElement([1,2]),
+            'administrateur_id' =>fake()->randomElement([1,2]),
             'description' =>fake()->paragraph(),
             'recette_actuelle' =>fake()->randomElement([0,1.2,2.9]),
             'depense_actuelle' =>fake()->randomElement([0,1.2,2.9]),
+            'fond_restant' =>fake()->randomElement([0,1.2,2.9]),
             'budget' =>fake()->randomElement([1000,2000]),
             'date_fin' =>fake()->randomElement([NULL]),
-            'projet_parent_id' => fake()->randomElement([40,41,43,44,45,48]),
+            'projet_parent_id' => fake()->randomElement([NULL,1,2]),
             'image' => fake()->randomElement([
-                'projets_images/tRy6qq4WiF47wR2nA9BvqoBpwgJFhZqLFzcoq3D5.jpg',
-                'projets_images/d5cttS3yE5HU1wC0DFG2mXLUz211hzkMH4PtJJV8.jpg'])
+                'projets_images/tfO39FI9BjoaV421vwkQuQLhnUTIR6l8mivitiwc.png',
+                'projets_images/tfO39FI9BjoaV421vwkQuQLhnUTIR6l8mivitiwc.png'])
         ];
     }
 }

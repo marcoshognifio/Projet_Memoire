@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('stands', function (Blueprint $table) {
-            
             $table->id();
-            $table->string('nom')->nullable();
-            $table->string('quantite')->nullable();
-            $table->float('montant')->nullable();
-            $table->timestamps();
-          
+            $table->string('nom');
+            $table->string('quantite');
+            $table->double('montant');  
+        });
+
+        Schema::table('articles', function($table) {
+            $table->string('nom');
         });
     }
 

@@ -11,7 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::rename('transaction_entre_projet', 'transaction');
+        Schema::create('depenses', function (Blueprint $table) {
+            $table->id();
+            $table->double('montant');
+            $table->string('objet');
+            $table->unsignedBigInteger('projet_id');
+            $table->foreign('projet_id')->references('id')->on('projets')->onDelete('cascade');
+            
+        });
     }
 
     /**

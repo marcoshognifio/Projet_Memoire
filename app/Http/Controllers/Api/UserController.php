@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginFormRequest;
+use App\Http\Requests\UserFormRequest;
+use App\Http\Resources\ProjetResource;
 use App\Http\Resources\UserResource;
 use App\Models\Projet;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -29,10 +33,41 @@ class UserController extends Controller
         }
     }
 
+    public function save_user(UserFormRequest $request)
+    {
+        $user = User::create($request->validated());
+        return response()->json([
+            'success' => true,
+            'user' => $user
+        ]);
+    }
+
     public function projets(string $id)
     {
         $user = Auth::user();
         
-        return $projets = Projet::where('createur_id', '=', $id)->where('projet_parent_id','=',NULL)->get();
+        return ProjetResource::Collection(Projet::where('createur_id', '=', $id)->where('projet_parent_id','=',NULL)->get());
+    }
+
+    private function validUser(UserFormRequest $request,User $utilisateur){
+
+        $data =$request->validated();
+        $image =null;
+        if(isset($request->validated()['image'])){
+    
+            $image =$request->validated()['image'];
+            if(!$image->getError()){
+                    $data['image'] = $image->store('users_images','public');
+            }
+    
+            if($utilisateur->image){
+                Storage::disk('public')->delete($utilisateur->image);
+            }
+        } 
+    
+        $data['name'] = strtolower($data['name']);
+                
+        return $data;
     }
 }
+
