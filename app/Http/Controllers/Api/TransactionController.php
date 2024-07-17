@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TransactionFormRequest;
+use App\Http\Resources\TransactionResource;
 use App\Models\Projet;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -36,5 +37,15 @@ class TransactionController extends Controller
             ]);
         }
         
+    }
+
+    public function transactions(int $projet)
+    {
+        $transactions_effect =TransactionResource::Collection( Transaction::where('projet_emetteur_id', '=', $projet)->get());
+        $transactions_recues =TransactionResource::Collection( Transaction::where('projet_destinataire_id', '=', $projet)->get());
+        return response()->json([
+            'transactions_effectuees' => $transactions_effect,
+            'transactions_recues' => $transactions_recues
+        ]);
     }
 }

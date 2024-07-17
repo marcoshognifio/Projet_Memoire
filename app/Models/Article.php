@@ -12,7 +12,7 @@ class Article extends Model
     protected $fillable = [
         'nom',
         'quantite',
-        'montant',
+        'prix',
         'depense_id',
     ];
 

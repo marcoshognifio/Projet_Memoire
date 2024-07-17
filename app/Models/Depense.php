@@ -15,4 +15,8 @@ class Depense extends Model
         'projet_id'
     ];
 
+    public function articles(){
+        return $this->hasMany(Article::class);
+    }
+
 }

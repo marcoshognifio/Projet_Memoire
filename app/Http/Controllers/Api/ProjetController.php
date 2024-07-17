@@ -7,9 +7,6 @@ use App\Http\Requests\AjoutFOndFormRequest;
 use App\Http\Requests\ProjetFormRequest;
 use App\Http\Resources\ProjetResource;
 use App\Models\Projet;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProjetController extends Controller
@@ -18,7 +15,7 @@ class ProjetController extends Controller
     {
         $projets =ProjetResource::Collection( Projet::where('projet_parent_id', '=', $projet)->get());
         
-        return $projets;
+        return  response()->json($projets);
     }
 
     public function create_projet(ProjetFormRequest $request)

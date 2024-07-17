@@ -23,7 +23,8 @@ class DepenseFormRequest extends FormRequest
     {
         return [
         
-            'objet' =>['required','min:8']
+            'objet' =>['required','min:8'],
+            'montant' =>['required','regex:/^[0-9]+$/']
         
         ];
     }

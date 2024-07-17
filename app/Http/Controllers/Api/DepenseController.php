@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleFormRequest;
 use App\Http\Requests\DepenseFormRequest;
+use App\Http\Resources\DepenseResource;
 use App\Models\Article;
 use App\Models\Depense;
 use App\Models\Projet;
@@ -13,70 +14,37 @@ use Illuminate\Http\Request;
 
 class DepenseController extends Controller
 {
-    public function index(string $projet_id){
+    public function index(int $projet_id){
 
-        $stands = Stand::all();
-        return view('projet.depense',['projet' => $projet_id,'articles' => $stands]);
-    }
-
-    public function create_article(string $projet_id){
-
-        return view('projet.create_article',['projet' => $projet_id]);
-    }
-    
-    public function store_article(ArticleFormRequest $request,string $projet_id){
-
-        Stand::create($request->validated());
+        $depenses =DepenseResource::Collection( Depense::where('projet_id', '=', $projet_id)->get());
         
-        return redirect()->route('user.projet.depense.index',$projet_id);
+        return response()->json($depenses);
     }
 
-    public function store(DepenseFormRequest $request, Projet $projet)
+
+    public function store(Request $request, int $projet)
     {
-        $stands = Stand::all();
-       
-        if(!$stands->isEmpty())
+        $a = $request->all();
+        $depense = $a["depense"][0];
+        $articles = $a["articles"];
+        $depense['projet_id'] = $projet;
+        $depense = Depense::create($depense); 
+        
+        foreach($articles as $article)
         {
-            Stand::truncate();
-            $montant = 0;
-            foreach($stands as $stand)
-            {
-                $montant = $montant + $stand->montant;
-            }
-
-            if(floatval($projet['budget']) >= $montant)
-            {
-                $data = $request->Validated();
-                $data['projet_id'] = $projet['id'];
-                $data['montant'] = 0;
-                $depense = Depense::create($data);
-                $projet['budget'] = floatval($projet['budget']) - $montant;
-                $projet->save();
-                foreach($stands as $stand)
-                {
-                    $article = $stand->article();
-                    $article['depense_id'] = $depense['id'];
-                    Article::create($article);
-                    $montant = $montant + $stand->montant;
-                    $stand->delete();
-                }
-
-                $depense->montant = $montant;
-                $depense->save();
-                return redirect()->route('user.projet.show',$projet)->with('success',
-                "La depense a ete effectuee avec succes");
-            
-            }
-            else
-            {
-                return redirect()->route('user.projet.show',$projet)->with('success',
-                "Votre fond est insuffisant pour effectuer cette depense");
-            }
+            $article['depense_id'] = $depense['id'];
+            Article::create($article);
         }
-        else
-        {
-            return redirect()->route('user.projet.depense.index',$projet)->with('success',
-                "Vous n'aviez ajoute aucun article");
-        }
+
+        $projet = Projet::find($projet);
+        $projet['budget'] = floatval($projet['budget']) - floatval($depense['montant']);
+        $projet->save();
+
+        return response()->json([
+            'success' => true,
+            'projet' => $depense
+        ]);
+        
     }
+
 }

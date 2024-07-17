@@ -35,7 +35,7 @@ class UserController extends Controller
 
     public function save_user(UserFormRequest $request)
     {
-        $user = User::create($request->validated());
+        $user = User::create($this->validUser($request,new User()));
         return response()->json([
             'success' => true,
             'user' => $user
@@ -46,7 +46,7 @@ class UserController extends Controller
     {
         $user = Auth::user();
         
-        return ProjetResource::Collection(Projet::where('createur_id', '=', $id)->where('projet_parent_id','=',NULL)->get());
+        return response()->json(ProjetResource::Collection(Projet::where('createur_id', '=', $id)->where('projet_parent_id','=',NULL)->get()));
     }
 
     private function validUser(UserFormRequest $request,User $utilisateur){
