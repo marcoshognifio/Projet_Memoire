@@ -45,8 +45,11 @@ class UserController extends Controller
     public function projets(string $id)
     {
         $user = Auth::user();
+        return response()->json([
+            'projets_crees' => ProjetResource::Collection(Projet::where('createur_id', '=', $id)->where('projet_parent_id','=',NULL)->get()),
+            'projets_administres' => ProjetResource::Collection(Projet::where('administrateur_id', '=', $id)->get()),
+        ]);
         
-        return response()->json(ProjetResource::Collection(Projet::where('createur_id', '=', $id)->where('projet_parent_id','=',NULL)->get()));
     }
 
     private function validUser(UserFormRequest $request,User $utilisateur){
