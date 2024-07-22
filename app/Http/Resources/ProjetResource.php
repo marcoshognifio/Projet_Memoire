@@ -20,7 +20,11 @@ class ProjetResource extends JsonResource
             'nom' => $this->resource->nom,
             'administrateur' => new UserResource($this->administrateur),
             'description' => $this->resource->description,
-            'budget' => $this->resource->budget,
+            'budget_prevu' => $this->resource->budget_prevu,
+            'recette_actuelle' => $this->resource->recette_actuelle,
+            'depense_actuelle' => $this->resource->depense_actuelle,
+            'transactions' => $this->resource->transactions,
+            'fond_restant' => $this->resource->fond_restant(),
             'projet_parent_id' => $this->resource->projet_parent_id,
             'image' => $this->resource->imageUrl()
         ];

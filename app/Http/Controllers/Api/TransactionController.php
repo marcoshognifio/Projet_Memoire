@@ -17,12 +17,13 @@ class TransactionController extends Controller
         $data = $request->validated();
         $projet = Projet::find($projet_id);
         $data['projet_emetteur_id'] = $projet['id'];
-        if(floatval($projet['budget']) >= floatval($data['montant']))
+        $nbre = floatval($projet['recette_actuelle'])-floatval($projet['depense_actuelle'])-floatval($projet['transactions']);
+        if($nbre >= floatval($data['montant']))
         {
-            $projet['budget'] = floatval($projet['budget']) - floatval($data['montant']);
+            $projet['transactions'] = floatval($projet['transactions']) + floatval($data['montant']);
             $projet->save();
             $destinat = Projet::find($data['projet_destinataire_id']);
-            $destinat->budget = floatval( $destinat->budget) + floatval($data['montant']);
+            $destinat->recette_actuelle = floatval( $destinat->recette_actuelle) + floatval($data['montant']);
             $destinat->save();
 
             Transaction::create($data);
@@ -33,7 +34,7 @@ class TransactionController extends Controller
         else
         {
             return response()->json([
-                'success' => true,
+                'success' => false,
             ]);
         }
         

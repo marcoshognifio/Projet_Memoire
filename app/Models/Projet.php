@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Expr\Cast\Double;
 
 class Projet extends Model
 {
@@ -17,7 +18,10 @@ class Projet extends Model
         'administrateur_id',
         'projet_parent_id',
         'description',
-        'budget',
+        'budget_prevu',
+        'recette_actuelle',
+        'depense_actuelle',
+        'transactions',
         'date_fin',
         'image'
     ];
@@ -30,6 +34,11 @@ class Projet extends Model
     public function imageUrl():string 
     {
         return Storage::disk('public')->url($this->image);
+    }
+
+    public function fond_restant():float
+    {
+        return  floatval($this->recette_actuelle)-floatval($this->depense_actuelle)-floatval($this->transactions);
     }
 
 }
