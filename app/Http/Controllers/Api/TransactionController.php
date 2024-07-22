@@ -8,6 +8,8 @@ use App\Http\Resources\TransactionResource;
 use App\Models\Projet;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
@@ -40,13 +42,42 @@ class TransactionController extends Controller
         
     }
 
-    public function transactions(int $projet)
+    
+    public function transactions_effectuees(int $projet)
     {
-        $transactions_effect =TransactionResource::Collection( Transaction::where('projet_emetteur_id', '=', $projet)->get());
-        $transactions_recues =TransactionResource::Collection( Transaction::where('projet_destinataire_id', '=', $projet)->get());
+        $transactions = Transaction::where('projet_emetteur_id', '=', $projet)
+                                    ->orderBy('created_at')
+                                    ->orderBy('projet_destinataire_id')
+                                    ->get()
+                                    ->groupBy('projet_destinataire_id');
+
+        $groupedElements = new Collection();
+        foreach($transactions as $id=>$items)
+        {
+            $groupedElements->push([
+                'id' => $id,
+                 'items' => TransactionResource::collection($items)
+            ]);
+        }
+        
+        $transactions = Transaction::select('projet_destinataire_id', 
+                    DB::raw('SUM(montant) as montant_total'))
+                        ->orderBy('projet_destinataire_id')
+                        ->groupBy('projet_destinataire_id')
+                        ->get();
+
         return response()->json([
-            'transactions_effectuees' => $transactions_effect,
-            'transactions_recues' => $transactions_recues
-        ]);
+            'transactions_effectuees' =>$groupedElements,
+            'montants_transactions' => $transactions
+        ]);                            
     }
+
+    public function transactions_recues(int $projet)
+    {
+        $transactions = TransactionResource::collection(Transaction::where('projet_destinataire_id', '=', $projet)->get());                                   
+
+        return response()->json([$transactions]);                            
+    }
+
+
 }
