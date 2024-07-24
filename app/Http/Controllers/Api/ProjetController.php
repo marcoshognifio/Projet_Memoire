@@ -20,21 +20,9 @@ class ProjetController extends Controller
 
     public function create_projet(ProjetFormRequest $request)
     {
-     
+
         $data = $this->validProjet($request,new Projet());
         $projet = Projet::create($data);
-        return response()->json([
-            'success' => true,
-            'projet' => $projet
-        ]);
-    }
-
-    public function ajoutfond(AjoutFOndFormRequest $request,int $projet)
-    {
-        $data = floatval($request->validated()['fond']);
-        $projet = Projet::find($projet);
-        $projet->budget = $data + floatval($projet['budget']);
-        $projet->save();
         return response()->json([
             'success' => true,
             'projet' => $projet

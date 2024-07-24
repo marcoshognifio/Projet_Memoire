@@ -17,7 +17,7 @@ class TransactionResource extends JsonResource
         return [
             'id' => $this->resource->id,
             'montant' => $this->resource->montant,
-            'projet_emetteur' => $this->projet_emetteur->nom,
+            'projet_emetteur' => $this->projet_emetteur->nom ?? "Pas de parent",
             'projet_destinataire' => $this->projet_destinataire->nom,
             'objet' => $this->resource->objet,
             'created_at'=>$this->resource->created_at->format('d-m-y'),

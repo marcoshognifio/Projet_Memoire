@@ -23,13 +23,13 @@ class ProjetFormRequest extends FormRequest
     {
         return [
             'nom' => ['required','min:10'],
-            'description' => ['min:10',],
-            'budget' =>['regex:/^[0-9]+$/'],
-            'date_fin'=>['date'],
-            'image' => ['image','max:2000'],
+            'description' => ['nullable','min:10'],
+            'budget' =>['nullable','regex:/^[0-9]+$/'],
+            'date_fin'=>['nullable','date'],
+            'image' => ['nullable','image','max:2000'],
             'createur_id' => ['regex:/^[0-9]+$/'],
             'administrateur_id' => ['regex:/^[0-9]+$/'],
-            'projet_parent_id' => ['regex:/^[0-9]+$/']
+            'projet_parent_id' => ['nullable','regex:/^[0-9]+$/']
         ];
     }
 }

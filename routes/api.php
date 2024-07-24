@@ -23,7 +23,7 @@ Route::prefix('user')->name('user.')->group(function () {
 Route::prefix('projet')->name('projet.')->group(function () {
     Route::post('/create_projet', [ProjetController::class,'create_projet']);
     Route::get('/{id_projet}/sous_projets', [ProjetController::class,'sous_projets']);
-    Route::post('{id}/ajoutfond', [ProjetController::class,'ajoutfond']);
+    Route::post('{id}/ajoutfond', [TransactionController::class,'ajoutfond']);
     Route::get('/{projet}/show', [ProjetController::class,'show'])->name('show');
     Route::post('{id}/save_transaction', [TransactionController::class,'save_transaction']);
     Route::get('{id}/transactions_effectuees', [TransactionController::class,'transactions_effectuees']);
