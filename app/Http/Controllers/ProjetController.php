@@ -40,6 +40,8 @@ class ProjetController extends Controller
         return view('user.projet.index',['projets'=>$projets,'projet_actuel'=>$projet]);
     }
 
+
+
     /**
      * Update the specified resource in storage.
      */

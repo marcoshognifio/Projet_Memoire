@@ -6,7 +6,9 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Http\\Controllers\\Api\\DepenseController' => $baseDir . '/app/Http/Controllers/Api/DepenseController.php',
     'App\\Http\\Controllers\\Api\\ProjetController' => $baseDir . '/app/Http/Controllers/Api/ProjetController.php',
+    'App\\Http\\Controllers\\Api\\TransactionController' => $baseDir . '/app/Http/Controllers/Api/TransactionController.php',
     'App\\Http\\Controllers\\Api\\UserController' => $baseDir . '/app/Http/Controllers/Api/UserController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DepenseController' => $baseDir . '/app/Http/Controllers/DepenseController.php',
@@ -20,6 +22,10 @@ return array(
     'App\\Http\\Requests\\ProjetFormRequest' => $baseDir . '/app/Http/Requests/ProjetFormRequest.php',
     'App\\Http\\Requests\\TransactionFormRequest' => $baseDir . '/app/Http/Requests/TransactionFormRequest.php',
     'App\\Http\\Requests\\UserFormRequest' => $baseDir . '/app/Http/Requests/UserFormRequest.php',
+    'App\\Http\\Resources\\ArticleResource' => $baseDir . '/app/Http/Resources/ArticleResource.php',
+    'App\\Http\\Resources\\DepenseResource' => $baseDir . '/app/Http/Resources/DepenseResource.php',
+    'App\\Http\\Resources\\ProjetResource' => $baseDir . '/app/Http/Resources/ProjetResource.php',
+    'App\\Http\\Resources\\TransactionResource' => $baseDir . '/app/Http/Resources/TransactionResource.php',
     'App\\Http\\Resources\\UserResource' => $baseDir . '/app/Http/Resources/UserResource.php',
     'App\\Models\\Article' => $baseDir . '/app/Models/Article.php',
     'App\\Models\\Categorie' => $baseDir . '/app/Models/Categorie.php',

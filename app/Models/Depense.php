@@ -16,7 +16,12 @@ class Depense extends Model
     ];
 
     public function articles(){
-        return $this->hasMany(Article::class);
+        return $this->hasMany(Article::class,'depense_id');
+    }
+
+    public function depense(){
+
+        return $this-> belongsTo(Projet::class,'projet_id');
     }
 
 }

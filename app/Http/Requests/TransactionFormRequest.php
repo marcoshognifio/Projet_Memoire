@@ -25,7 +25,7 @@ class TransactionFormRequest extends FormRequest
             
             'projet_destinataire_id' =>['required','regex:/^[0-9]+$/'],
             'montant' => ['required','regex:/^[0-9]+$/'],
-            'objet' => ['required'],
+            'objet' => ['nullable'],
         ];
     }
 }

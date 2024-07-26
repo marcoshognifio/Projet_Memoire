@@ -7,6 +7,7 @@ use App\Http\Requests\AjoutFOndFormRequest;
 use App\Http\Requests\ProjetFormRequest;
 use App\Http\Resources\ProjetResource;
 use App\Models\Projet;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class ProjetController extends Controller
@@ -20,12 +21,33 @@ class ProjetController extends Controller
 
     public function create_projet(ProjetFormRequest $request)
     {
-
         $data = $this->validProjet($request,new Projet());
         $projet = Projet::create($data);
         return response()->json([
             'success' => true,
             'projet' => $projet
+        ]);
+    }
+
+    public function change_admin(Request $request, int $projet ){
+
+        $projet = Projet::find($projet);
+        $projet->administrateur_id = intval($request->all()['user_id']);
+        $projet->save();
+
+        return response()->json([
+            'success' => true,
+            'user' => $projet
+        ]);
+
+    }
+
+    public function delete(Request $request)
+    {
+        $projet = Projet::find($request->all()['projet_id']);
+        $projet->delete();
+        return response()->json([
+            'success' => true
         ]);
     }
 

@@ -13,16 +13,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+use function PHPUnit\Framework\isEmpty;
+
 class UserController extends Controller
 {
     public function login(LoginFormRequest $request)
     {
         $user = $request->validated();
         if(Auth::attempt($user)){
-           
+           $user = Auth::user();
+           $token = $user->createToken('auth_token')->plainTextToken;
             return response()->json([
                 'success' => true,
-                'user' => new UserResource(Auth::user())
+                'user' => new UserResource(Auth::user()),
+                'token' => $token
             ]);
         }
         else{
@@ -40,6 +44,22 @@ class UserController extends Controller
             'success' => true,
             'user' => $user
         ]);
+    }
+
+    public function search(Request $request)
+    {   
+        $user = User::where('email', '=', $request->all()['email'])->get();
+            
+        //dd($user->isNotEmpty());
+        if($user->isNotEmpty() == true)
+            return response()->json([
+                'success' => true, 
+                'user' => $user[0]
+            ]);
+        else
+            return   response()->json([
+                'success' => false,
+            ]); 
     }
 
     public function projets(string $id)

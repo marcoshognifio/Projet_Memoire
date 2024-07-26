@@ -40,5 +40,20 @@ class Projet extends Model
     {
         return  floatval($this->recette_actuelle)-floatval($this->depense_actuelle)-floatval($this->transactions);
     }
+    
+    public function projets(){
+
+        return $this-> hasMany(Projet::class,'projet_parent_id')->onDelete('cascade');
+    }
+
+    public function depenses(){
+
+        return $this-> hasMany(Projet::class,'projet_id')->onDelete('cascade');
+    }
+
+    public function transactions(){
+
+        return $this-> hasMany(Projet::class,'projet_emetteur_id')->onDelete('cascade');
+    }
 
 }

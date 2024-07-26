@@ -53,8 +53,6 @@ class TransactionController extends Controller
 
         return response()->json([
             'success' => true,
-            'projet' => $projet,
-            'transaction' => $transactions
         ]);
     }
 
