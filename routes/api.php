@@ -22,7 +22,8 @@ Route::prefix('user')->name('user.')->group(function () {
 Route::middleware("auth:sanctum")->group(function(){
     Route::prefix('user')->name('user.')->group(function (){
 
-        Route::get('/{id}/projets', [UserController::class,'projets']);
+        Route::get('/{id}/projets_admin', [UserController::class,'projets_admin']);
+        Route::get('/{id}/projets_create', [UserController::class,'projets_create']);
         Route::post('/search', [UserController::class,'search']);
     });
 

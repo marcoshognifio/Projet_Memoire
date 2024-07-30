@@ -22,11 +22,11 @@ class UserFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required','min:5','regex:/^[a-zA-Z\ ]+$/'],
-            'telephone' => ['required','min:5','regex:/^[0-9]+$/'],
+            'name' => ['required','min:5'],
+            'telephone' => ['required','min:5'],
             'email' => ['required','email'],
             'password' =>['required','min:5'],
-            'image' => []
+            'image' => ['nullable']
         ];
     }
 }

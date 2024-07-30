@@ -45,6 +45,12 @@ class ProjetController extends Controller
     public function delete(Request $request)
     {
         $projet = Projet::find($request->all()['projet_id']);
+        if($projet['projet_parent_id'] != null){
+            $projet_parent = Projet::find($projet['projet_parent_id']);
+            $projet_parent->recette_acutelle = floatval($projet_parent['recette_acutelle'])+
+                                                floatval($projet['recette_actuelle']);
+        }
+        
         $projet->delete();
         return response()->json([
             'success' => true

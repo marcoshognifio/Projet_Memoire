@@ -19,6 +19,7 @@ class ProjetResource extends JsonResource
             'id' => $this->resource->id,
             'nom' => $this->resource->nom,
             'administrateur' => new UserResource($this->administrateur),
+            'createur' => $this->resource->createur_id,
             'description' => $this->resource->description,
             'budget_prevu' => $this->resource->budget_prevu,
             'recette_actuelle' => $this->resource->recette_actuelle,

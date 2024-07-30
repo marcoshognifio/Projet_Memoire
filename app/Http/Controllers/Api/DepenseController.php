@@ -37,7 +37,7 @@ class DepenseController extends Controller
         }
 
         $projet = Projet::find($projet);
-        $projet['budget'] = floatval($projet['budget']) - floatval($depense['montant']);
+        $projet['depense_actuelle'] = floatval($projet['depense_actuelle']) + floatval($depense['montant']);
         $projet->save();
 
         return response()->json([
