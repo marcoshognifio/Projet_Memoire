@@ -22,11 +22,11 @@ class ProjetFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom' => ['required','min:10'],
+            'nom' => ['required','min:3'],
             'description' => ['nullable','min:10'],
             'budget' =>['nullable','regex:/^[0-9]+$/'],
             'date_fin'=>['nullable','date'],
-            'image' => ['nullable','image','max:2000'],
+            'image' => ['nullable'],
             'createur_id' => ['regex:/^[0-9]+$/'],
             'administrateur_id' => ['regex:/^[0-9]+$/'],
             'projet_parent_id' => ['nullable','regex:/^[0-9]+$/']

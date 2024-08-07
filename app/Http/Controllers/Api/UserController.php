@@ -70,7 +70,7 @@ class UserController extends Controller
 
     public function save_user(UserFormRequest $request)
     {
-        $user = User::create($this->validUser($request,new User()));
+        $user = User::create($request->validated());
         return response()->json([
             'success' => true,
             'user' => $user

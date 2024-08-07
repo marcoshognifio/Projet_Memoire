@@ -21,8 +21,7 @@ class ProjetController extends Controller
 
     public function create_projet(ProjetFormRequest $request)
     {
-        $data = $this->validProjet($request,new Projet());
-        $projet = Projet::create($data);
+        $projet = Projet::create($request->validated());;
         return response()->json([
             'success' => true,
             'projet' => $projet
