@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\DepenseController;
 use App\Http\Controllers\Api\ProjetController;
+use App\Http\Controllers\Api\TestimageController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -19,9 +20,13 @@ Route::prefix('user')->name('user.')->group(function () {
 
 });
 
+Route::post('/image', [TestimageController::class,'upload_image']);
+
 Route::middleware("auth:sanctum")->group(function(){
     Route::prefix('user')->name('user.')->group(function (){
 
+        Route::post('/authentification', [UserController::class,'authentification']);
+        Route::post('{id}/edit', [UserController::class,'edit']);
         Route::get('/{id}/projets_admin', [UserController::class,'projets_admin']);
         Route::get('/{id}/projets_create', [UserController::class,'projets_create']);
         Route::post('/search', [UserController::class,'search']);

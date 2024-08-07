@@ -37,6 +37,37 @@ class UserController extends Controller
         }
     }
 
+    public function authentification(LoginFormRequest $request){
+
+        $user = $request->validated();
+        if(Auth::guard('web')->attempt($user)){
+
+            return response()->json([
+                'success' => true
+            ]);
+        }
+        else{
+
+            return response()->json([
+                'success' => false
+            ]);
+        }    
+
+    }
+
+    public function edit(Request $request,int $user_id){
+        $a=$request->all();
+        $user = User::find($user_id);
+        
+        $user->update($a);
+
+        return response()->json([
+            'success' => true,
+            'user' => $user
+        ]);
+        
+    }    
+
     public function save_user(UserFormRequest $request)
     {
         $user = User::create($this->validUser($request,new User()));
