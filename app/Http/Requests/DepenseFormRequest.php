@@ -24,8 +24,8 @@ class DepenseFormRequest extends FormRequest
         return [
         
             'objet' =>['required','min:8'],
-            'montant' =>['required','regex:/^[0-9]+$/']
-        
+            'montant' =>['required','regex:/^[0-9]+$/'],
+            'image' => ['nullable']
         ];
     }
 }

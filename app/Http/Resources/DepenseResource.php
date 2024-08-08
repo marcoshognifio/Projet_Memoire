@@ -19,6 +19,7 @@ class DepenseResource extends JsonResource
             'objet' => $this->resource->objet,
             'montant' => $this->resource->montant,
             'articles' => ArticleResource::Collection($this->articles),
+            'image' =>$this->resource->imageUrl(),
             'created_at'=>$this->resource->created_at->format('d-m-y')
         ];
     }

@@ -31,9 +31,10 @@ class Projet extends Model
         return $this->belongsTo(User::class,'administrateur_id');
     }
 
-    public function imageUrl():string 
+    public function imageUrl() 
     {
-        return Storage::disk('public')->url($this->image);
+
+        return $this->image != null ? Storage::disk('public')->url($this->image):null;
     }
 
     public function fond_restant():float
